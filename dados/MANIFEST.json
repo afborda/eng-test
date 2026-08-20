@@ -1,0 +1,29 @@
+{
+  "layer": "bronze",
+  "anonymized": true,
+  "no_silver_gold": true,
+  "event_rows": 1451967,
+  "time_start": "2026-05-04 03:49:20+00:00",
+  "time_end": "2026-08-19 18:36:59.463000+00:00",
+  "ip_space": "198.18.0.0/15 (public) and 10.0.0.0/8 (private)",
+  "candidate_must_build": [
+    "filter_date",
+    "customer_id",
+    "canonical source/severity",
+    "dedup",
+    "silver",
+    "gold"
+  ],
+  "files": [
+    "bronze_auth.parquet",
+    "bronze_blocks.parquet",
+    "bronze_container.parquet",
+    "bronze_cspm.parquet",
+    "bronze_dns.parquet",
+    "bronze_incidents.parquet",
+    "bronze_inventory.parquet",
+    "bronze_metrics.parquet",
+    "bronze_system.parquet",
+    "bronze_waf.parquet"
+  ]
+}

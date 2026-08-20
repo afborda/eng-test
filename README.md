@@ -66,11 +66,15 @@ O ingest **não** precisa escrever Delta. JSONL ou Parquet chega.
 
 ## Dados
 
-**Amostra** (3 dias) em `dados/amostra/` — para o ingest ligar.
+Os parquets estão em **`dados/`** (~1,9M linhas, mai–ago, ~20 MB). Bronze cru, anonimizado.
 
-**Full (~1,9M linhas) é obrigatório na entrega.** Escolhe **uma** opção. O pipeline **não muda** entre amostra e full.
+HTTP e S3 são o **mesmo** pack, se preferires não clonar os binários.
 
-### Opção A — download HTTP
+### No repo
+
+`dados/bronze_*.parquet`
+
+### Ou download HTTP
 
 ```bash
 wget https://data.synthfin.com.br/raven-bronze.tar.gz
@@ -81,7 +85,7 @@ tar -xzf raven-bronze.tar.gz
 Se o DNS falhar: https://synthfin.com.br/data/raven-bronze.tar.gz  
 Índice: https://data.synthfin.com.br/
 
-### Opção B — S3 no Databricks Free (boto3)
+### Ou S3 no Databricks Free (boto3)
 
 O compute serverless **não** usa External Location nem `s3a://` com este MinIO. Usa **boto3 HTTP**.
 
@@ -134,7 +138,7 @@ Timestamps mistos, `src` com casing inconsistente, `host` sujo, duplicatas, `rec
 
 ## Barra do ingest
 
-**Núcleo:** lê amostra e full sem mudar código; segunda execução do mesmo dia **não duplica**; lineage em cada linha (path, hora, versão).
+**Núcleo:** lê `dados/` (ou o mesmo pack via HTTP/S3); segunda execução do mesmo dia **não duplica**; lineage em cada linha (path, hora, versão).
 
 **Recomendado:** partição `filter_date`/`source`; DLQ (linha inválida não mata o batch); teste de parser (WAF + auth + uma linha podre); não carregar ~1,9M linhas na RAM se puder iterar.
 
